@@ -1,24 +1,5 @@
 require File.dirname(__FILE__) + "/test_helper"
 
-class SampleController < ActionController::Base
-  def double_render
-    render :text => "once"
-    render :text => "twice"
-  end
-
-  def implicit_template
-  end
-  
-  def raise_inline
-    render :inline => "<% raise 'raise in template' %>"
-  end
-end
-
-SampleController.instance_methods(false).each do |action|
-  ActionController::Routing::Routes.add_route \
-    "/sample/#{action}", :controller => "sample", :action => action
-end
-
 class UnitControllerTest < ActionController::TestCase
   tests SampleController
   
@@ -42,6 +23,5 @@ class UnitControllerTest < ActionController::TestCase
     assert_raises(ActionController::DoubleRenderError) do
       get :double_render
     end
-  end
-  
+  end  
 end

@@ -14,3 +14,17 @@ require "unit_controller"
 require "test/unit"
 gem "dust", "0.1.6"
 require "dust"
+
+require File.dirname(__FILE__) + "/sample_controller"
+
+Test::Unit::TestCase.class_eval do
+
+  def assert_fails(&block)
+    assert_raises Test::Unit::AssertionFailedError, &block
+  end
+
+  def assert_passes
+    yield
+  end
+
+end
