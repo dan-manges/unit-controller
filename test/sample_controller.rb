@@ -16,6 +16,9 @@ class SampleController < ActionController::Base
   end
 end
 
+# Re-raise errors caught by the controller.
+class SampleController; def rescue_action(e) raise e end; end
+
 SampleController.instance_methods(false).each do |action|
   ActionController::Routing::Routes.add_route \
     "/sample/#{action}", :controller => "sample", :action => action

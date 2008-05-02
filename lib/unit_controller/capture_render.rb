@@ -3,7 +3,7 @@ module UnitController
     attr_reader :rendered
     
     def render(options = nil)
-      raise ActionController::DoubleRenderError.new if performed?
+      raise ActionController::DoubleRenderError, "Can only render or redirect once per action" if performed?
       @performed_render = true
       @rendered = options
       response.headers["Status"] = "200"

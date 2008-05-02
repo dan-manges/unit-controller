@@ -1,10 +1,10 @@
 require "rubygems"
-gem "rails", ENV["RAILS_VERSION"] || ">= 2.0"
+gem "rails", ENV["RAILS_VERSION"] || ">= 2.0.2"
 require "rails/version"
 require "action_controller"
 require "action_controller/test_process"
 
-if Rails::VERSION::MAJOR == 2
+if Rails::VERSION::MAJOR >= 2
   require "action_controller/test_case"
 end
 
@@ -18,7 +18,6 @@ require "dust"
 require File.dirname(__FILE__) + "/sample_controller"
 
 Test::Unit::TestCase.class_eval do
-
   def assert_fails(&block)
     assert_raises Test::Unit::AssertionFailedError, &block
   end
@@ -26,5 +25,4 @@ Test::Unit::TestCase.class_eval do
   def assert_passes
     yield
   end
-
 end
