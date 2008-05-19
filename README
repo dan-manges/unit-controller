@@ -1,5 +1,7 @@
 = UnitController
 
+Note to self: http://dev.rubyonrails.org/ticket/10536
+
 == Development
 
 Active development occurs on the GitHub.[http://github.com/dan-manges/unit-controller] Changes are pushed to the Rubyforge git repository.

@@ -26,30 +26,13 @@ task :publish_rdoc => [:rdoc] do
   Rake::SshDirPublisher.new("dcmanges@rubyforge.org", "/var/www/gforge-projects/unit-controller", "doc").upload
 end
 
-Gem::manage_gems
-
-specification = Gem::Specification.new do |s|
-	s.name   = "unit_controller"
-  s.summary = "UnitController assists with unit testing controllers by stubbing view rendering."
-	s.version = "0.1.0"
-	s.author = "Dan Manges"
-	s.description = s.summary
-	s.email = "daniel.manges@gmail.com"
-  s.homepage = "http://unit-controller.rubyforge.org"
-  s.rubyforge_project = "unit-controller"
-
-  s.has_rdoc = true
-  s.extra_rdoc_files = ['README']
-  s.rdoc_options << '--title' << "UnitController" << '--main' << 'README' << '--line-numbers'
-
-  s.autorequire = "unit_controller"
-  s.files = FileList['{lib,test}/**/*.rb', 'README', 'Rakefile'].to_a
-end
-
-Rake::GemPackageTask.new(specification) do |package|
+Gem.manage_gems
+Rake::GemPackageTask.new(eval(File.read("unit_controller.gemspec"))) do |package|
   package.need_zip = false
   package.need_tar = false
 end
+
+Rake::Task["gem"].prerequisites.unshift "test:multi"
 
 RAILS_VERSIONS = %w[1.2.6 2.0.2]
 
