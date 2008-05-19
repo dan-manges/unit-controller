@@ -44,3 +44,7 @@ namespace :test do
     end
   end
 end
+
+desc "pre-commit task"
+task :pc => %w[test:multi]
+

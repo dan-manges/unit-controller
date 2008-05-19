@@ -8,7 +8,7 @@ if Rails::VERSION::MAJOR >= 2
   require "action_controller/test_case"
 end
 
-$:.unshift(File.dirname(__FILE__) + '/../lib')
+$LOAD_PATH.unshift(File.dirname(__FILE__) + '/../lib')
 require "unit_controller"
 
 require "test/unit"
@@ -24,5 +24,39 @@ Test::Unit::TestCase.class_eval do
 
   def assert_passes
     yield
+  end
+end
+
+module TestHelper
+  def self.define_test_case(&block)
+    klass = Rails::VERSION::MAJOR >= 2 ? rails2_test_case : rails1_test_case
+    klass.class_eval &block
+    klass
+  end
+  
+  def self.rails2_test_case
+    klass = Class.new(ActionController::TestCase)
+    klass.class_eval do
+      tests SampleController
+
+      def setup
+        super
+        @controller.do_not_render_view
+      end
+    end
+    klass
+  end
+  
+  def self.rails1_test_case
+    klass = Class.new(Test::Unit::TestCase)
+    klass.class_eval do
+      def setup
+        @controller = SampleController.new
+        @request = ActionController::TestRequest.new
+        @response = ActionController::TestResponse.new
+        @controller.do_not_render_view
+      end
+    end
+    klass
   end
 end

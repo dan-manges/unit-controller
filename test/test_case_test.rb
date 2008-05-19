@@ -1,26 +1,6 @@
 require File.dirname(__FILE__) + "/test_helper"
 
-if Rails::VERSION::MAJOR >= 2
-  class TestCaseTest < ActionController::TestCase
-    tests SampleController
-
-    def setup
-      super
-      @controller.do_not_render_view
-    end
-  end  
-else
-  class TestCaseTest < Test::Unit::TestCase
-    def setup
-      @controller = SampleController.new
-      @request = ActionController::TestRequest.new
-      @response = ActionController::TestResponse.new
-      @controller.do_not_render_view
-    end
-  end
-end
-
-TestCaseTest.class_eval do
+TestHelper.define_test_case do
   test "assert_rendered" do
     get :text_foo
     assert_passes do
