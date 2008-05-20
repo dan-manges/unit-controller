@@ -6,7 +6,7 @@ module UnitController
       raise ActionController::DoubleRenderError, "Can only render or redirect once per action" if performed?
       @performed_render = true
       @rendered = options
-      response.headers["Status"] = "200"
+      response.headers["Status"] = ActionController::Base::DEFAULT_RENDER_STATUS_CODE
     end
   end
 end

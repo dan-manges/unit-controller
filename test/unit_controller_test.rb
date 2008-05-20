@@ -17,4 +17,15 @@ TestHelper.define_test_case do
       get :double_render
     end
   end
+  
+  test "friendly error message if you forgot to tell controller not to render view" do
+    @controller = @controller.class.new
+    exception = nil
+    begin
+      assert_rendered @controller
+    rescue NoMethodError => exception
+    end
+    assert_not_nil exception
+    assert_equal "#{@controller} did not remember what it rendered. Did you call @controller.do_not_render_view ?", exception.message
+  end
 end
