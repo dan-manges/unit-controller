@@ -3,7 +3,7 @@ class SampleController < ActionController::Base
     render :text => "once"
     render :text => "twice"
   end
-
+  
   def implicit_template
   end
   
@@ -11,6 +11,16 @@ class SampleController < ActionController::Base
     render :inline => "<% raise 'raise in template' %>"
   end
   
+  def render_then_redirect
+    render :text => "hi"
+    redirect_to :action => :text_foo
+  end
+  
+  def redirect_then_render
+    redirect_to :action => :text_foo
+    render :text => "hi"
+  end
+
   def text_foo
     render :text => "foo"
   end

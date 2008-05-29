@@ -17,15 +17,31 @@ TestHelper.define_test_case do
       get :double_render
     end
   end
-  
-  test "friendly error message if you forgot to tell controller not to render view" do
-    @controller = @controller.class.new
-    exception = nil
-    begin
-      assert_rendered @controller
-    rescue NoMethodError => exception
+
+  test "raise on render then redirect" do
+    assert_raises(ActionController::DoubleRenderError) do
+      get :render_then_redirect
     end
-    assert_not_nil exception
-    assert_equal "#{@controller} did not remember what it rendered. Did you call @controller.do_not_render_view ?", exception.message
+  end
+
+  test "raise on redirect then render" do
+    assert_raises(ActionController::DoubleRenderError) do
+      get :redirect_then_render
+    end
+  end
+  
+  test "controller remembers what it renders even if rendering view" do
+    @controller = @controller.class.new
+    assert_equal true, @controller.render_view?
+    get :text_foo
+    assert_rendered :text => "foo"
+    assert_equal "foo", @response.body
+  end
+  
+  test "render_view?" do
+    @controller = @controller.class.new
+    assert_equal true, @controller.render_view?
+    @controller.do_not_render_view
+    assert_equal false, @controller.render_view?
   end
 end
