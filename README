@@ -1,6 +1,21 @@
 = UnitController
 
-Note to self: http://dev.rubyonrails.org/ticket/10536
+UnitController stubs view rendering to help with unit testing controller.
+
+Loading UnitController:
+
+  gem "unit_controller"
+  require "unit_controller"
+  
+In the setup method for your test case:
+  
+  def setup
+    @controller = SampleController.new
+    @request = ActionController::TestRequest.new
+    @response = ActionController::TestResponse.new
+    @controller.do_not_render_view
+  end
+  
 
 == Development
 
@@ -9,6 +24,7 @@ Active development occurs on the GitHub.[http://github.com/dan-manges/unit-contr
 == Contributors
 
 * Dan Manges
+* David Vollbracht
 
 == License
 Released under Ruby's license.[http://www.ruby-lang.org/en/LICENSE.txt]

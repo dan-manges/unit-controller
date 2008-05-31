@@ -31,7 +31,7 @@ Gem.manage_gems
 gem_spec = Gem::Specification.new do |s|
 	s.name   = "unit_controller"
   s.summary = "UnitController assists with unit testing controllers by stubbing view rendering."
-	s.version = "0.0.1"
+	s.version = "0.1.0"
 	s.author = "Dan Manges"
 	s.description = s.summary
 	s.email = "daniel.manges@gmail.com"
