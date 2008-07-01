@@ -18,7 +18,7 @@ Rake::RDocTask.new(:rdoc) do |rdoc|
   rdoc.rdoc_dir = "doc"
   rdoc.title    = "UnitController"
   rdoc.options << '--line-numbers'
-  rdoc.rdoc_files.include('README')
+  rdoc.rdoc_files.include('README.rdoc')
 end
 
 desc "Upload RDoc to RubyForge"
@@ -39,10 +39,10 @@ gem_spec = Gem::Specification.new do |s|
   s.rubyforge_project = "unit-controller"
 
   s.has_rdoc = true
-  s.extra_rdoc_files = ['README']
-  s.rdoc_options << '--title' << "UnitController" << '--main' << 'README' << '--line-numbers'
+  s.extra_rdoc_files = ['README.rdoc']
+  s.rdoc_options << '--title' << "UnitController" << '--main' << 'README.rdoc' << '--line-numbers'
 
-  s.files = FileList['{lib,test}/**/*.rb', 'README', 'Rakefile'].to_a
+  s.files = FileList['{lib,test}/**/*.rb', 'README.rdoc', 'Rakefile'].to_a
 end
 Rake::GemPackageTask.new(gem_spec) do |package|
   package.need_zip = false
