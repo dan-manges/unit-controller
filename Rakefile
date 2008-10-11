@@ -1,6 +1,5 @@
 require 'rake'
 require 'rake/testtask'
-require 'rake/rdoctask'
 require 'rake/gempackagetask'
 require 'rake/contrib/sshpublisher'
 
@@ -11,19 +10,6 @@ Rake::TestTask.new(:test) do |t|
   t.libs << 'lib'
   t.pattern = 'test/**/*_test.rb'
   t.verbose = true
-end
-
-desc "Generate documentation"
-Rake::RDocTask.new(:rdoc) do |rdoc|
-  rdoc.rdoc_dir = "doc"
-  rdoc.title    = "UnitController"
-  rdoc.options << '--line-numbers'
-  rdoc.rdoc_files.include('README.rdoc')
-end
-
-desc "Upload RDoc to RubyForge"
-task :publish_rdoc => [:rerdoc] do
-  Rake::SshDirPublisher.new("dcmanges@rubyforge.org", "/var/www/gforge-projects/unit-controller", "doc").upload
 end
 
 require "date"
@@ -38,11 +24,7 @@ gem_spec = Gem::Specification.new do |s|
   s.homepage = "http://unit-controller.rubyforge.org"
   s.rubyforge_project = "unit-controller"
 
-  s.has_rdoc = true
-  s.extra_rdoc_files = ['README.rdoc']
-  s.rdoc_options << '--title' << "UnitController" << '--main' << 'README.rdoc' << '--line-numbers'
-
-  s.files = FileList['{lib,test}/**/*.rb', 'README.rdoc', 'Rakefile'].to_a
+  s.files = FileList['{lib,test}/**/*.rb', 'README.markdown', 'LICENSE', 'Rakefile'].to_a
 end
 Rake::GemPackageTask.new(gem_spec) do |package|
   package.need_zip = false
@@ -61,7 +43,7 @@ namespace :gemspec do
   end
 end
 
-RAILS_VERSIONS = %w[1.2.6 2.0.2 2.1.0]
+RAILS_VERSIONS = %w[1.2.6 2.0.2 2.1.0 2.1.1]
 
 namespace :test do
   desc "test with multiple versions of rails"
