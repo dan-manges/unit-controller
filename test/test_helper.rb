@@ -1,6 +1,7 @@
 require "rubygems"
 gem "rails", ENV["RAILS_VERSION"] || ">= 2.0.2"
 require "rails/version"
+puts "==== Testing with Rails #{Rails::VERSION::STRING} ===="
 require "action_controller"
 require "action_controller/test_process"
 
