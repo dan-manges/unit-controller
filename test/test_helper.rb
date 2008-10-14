@@ -12,8 +12,16 @@ $LOAD_PATH.unshift(File.dirname(__FILE__) + '/../lib')
 require "unit_controller"
 
 require "test/unit"
-gem "dust", "0.1.6"
-require "dust"
+
+Test::Unit::TestCase.class_eval do
+  def self.test(name, &block)
+    test_name = "test_" + name.gsub(/\W/, "_")
+    if self.instance_methods.include? test_name
+      raise "#{test_name} is already defined in #{self}"
+    end
+    define_method test_name, &block
+  end
+end
 
 require File.dirname(__FILE__) + "/sample_controller"
 

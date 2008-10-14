@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Dan Manges"]
-  s.date = %q{2008-10-11}
+  s.date = %q{2008-10-14}
   s.description = %q{UnitController assists with unit testing controllers by stubbing view rendering.}
   s.email = %q{daniel.manges@gmail.com}
   s.files = ["lib/unit_controller/capture_render.rb", "lib/unit_controller/test_case_extension.rb", "lib/unit_controller.rb", "test/sample_controller.rb", "test/test_case_test.rb", "test/test_helper.rb", "test/unit_controller_test.rb", "README.markdown", "LICENSE", "Rakefile"]
