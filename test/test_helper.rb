@@ -38,12 +38,28 @@ end
 
 module TestHelper
   def self.define_test_case(&block)
-    klass = Rails::VERSION::MAJOR >= 2 ? rails2_test_case : rails1_test_case
+    klass = if Rails::VERSION::MAJOR >= 2
+      Rails::VERSION::MINOR.zero? ? rails2_0_test_case : rails2_test_case
+    else
+      rails1_test_case
+    end
     klass.class_eval &block
     klass
   end
   
-  def self.rails2_test_case
+  def self.rails2_test_case(&block)
+    klass = Class.new(ActionController::TestCase)
+    klass.class_eval do
+      tests SampleController
+
+      def setup
+        @controller.do_not_render_view
+      end
+    end
+    klass
+  end
+
+  def self.rails2_0_test_case
     klass = Class.new(ActionController::TestCase)
     klass.class_eval do
       tests SampleController
@@ -68,4 +84,9 @@ module TestHelper
     end
     klass
   end
+end
+
+# tests weren't running on rails 2.2.0 without this !?!?!?
+if Rails::VERSION::STRING[0,3] == "2.2"
+  at_exit { subclasses_of(Test::Unit::TestCase) }
 end
